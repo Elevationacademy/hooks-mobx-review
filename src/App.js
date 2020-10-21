@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
+import { inject, observer } from 'mobx-react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import Tasks from './components/Tasks';
 
-function App() {
+const App = inject("todoStore")(observer((props) => {
+
+  const [inputVal, setInputVal] = useState("");
+
+  const addTask = () => {
+    if(inputVal !== "") {
+      props.todoStore.addTask(inputVal);
+      setInputVal("");
+    }
+  }
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input type="text" value={inputVal} onChange={e => setInputVal(e.target.value)} />
+      <button onClick={addTask}>ADD</button>
+      <Tasks />
     </div>
   );
-}
+}))
 
 export default App;

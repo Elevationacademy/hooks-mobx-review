@@ -4,9 +4,16 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+import ToDoStore from './stores/ToDoStore';
+import { Provider } from 'mobx-react';
+const todoStore = new ToDoStore();
+
+
 ReactDOM.render(
   <React.StrictMode>
+    <Provider todoStore={todoStore}>
     <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
